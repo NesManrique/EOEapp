@@ -272,3 +272,19 @@ margin-top:30px;
 	-webkit-border-radius:5px;
 	border-radius: 5px;
 }
+
+#ruler {
+	margin-left:42px;
+	height: 30px;
+	width: 500px;
+	background-color: #999;
+	background-image: url(../images/ruler.jpg);
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+
+#weightage_slider {
+	margin-left:40px;
+	font-size:12px;
+	width:500px;
+}
