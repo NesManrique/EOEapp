@@ -3,11 +3,20 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
-GET		/consulta					controllers.Application.consulta()
-POST	/consulta					controllers.Application.resconsulta()
-GET		/config						controllers.Application.config()
-POST	/config						controllers.Application.updatePredicate()
+GET     /                        controllers.Application.index()
+GET     /consultaS               controllers.Application.consultaS()
+POST    /resconsultaS            controllers.Application.preguntaUnoS()
+POST    /resconsultaS2           controllers.Application.preguntaDosS()
+POST    /resconsultaS3     		controllers.Application.preguntaTresS()
+POST	  /resconsultaS4				controllers.Application.preguntaCuatroS()
+POST	  /resconsultaS5				controllers.Application.preguntaCincoS()
+POST	  /resconsultaS6				controllers.Application.preguntaSeisS()
+GET	  /consultaC               controllers.Application.consultaC()
+POST	  /resconsulta				   controllers.Application.preguntaUnoC()
+POST	  /resconsulta2			   controllers.Application.preguntaDosC()
+POST	  /resconsulta3			   controllers.Application.preguntaTresC()
+GET	  /config					   controllers.Application.config()
+POST	  /config					   controllers.Application.updatePredicate()
 
 
 # Map static resources from the /public folder to the /assets URL path

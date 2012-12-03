@@ -1,0 +1,48 @@
+@(consulta: String)
+@styles = {
+
+<link href="@routes.Assets.at("stylesheets/demo_table.css")" rel="stylesheet" type="text/css"/>
+
+}
+
+@scripts = {
+
+<script src="@routes.Assets.at("javascripts/jquery.js")" tyoe="text/javascripts"></script>
+<script src="@routes.Assets.at("javascripts/jquery.dataTables.js")" tyoe="text/javascripts"></script>
+
+<script>
+  
+  $(document).ready( function() {
+  $('table').dataTable( {
+  "oLanguage": {
+  "sSearch": "Buscar:",
+  "sEmptyTable": "No hay datos que correspondan con su busqueda",
+  "sInfo": "Mostrando elementos del _START_ al  _END_ de _TOTAL_ elementos",
+  "sInfoEmpty": "No hay resultados que mostrar",
+  "sLengthMenu": "Mostrar _MENU_ resultados por página",
+  "sInfoFiltered": " - filtrados de _MAX_ resultados",
+  "oPaginate": {
+  "sPrevious": "Página previa",
+  "sNext": "Página proxima",
+  "sFirst" : "Primera",
+  "sLast": "Última"
+  }
+  }
+  } );
+  } );
+  
+
+
+
+</script>
+
+}
+
+@import helper._
+
+@main("Preguntas")(styles)(scripts){
+
+@Html(consulta) 
+
+
+}

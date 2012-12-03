@@ -1,73 +1,87 @@
 @styles = {
-
 }
 
 @scripts = {
 }
 
+@import helper._
+
 @main("Preguntas")(styles)(scripts){
 
-         <h1> Preguntas </h1>
-    
-           
-         <form id="Pregunta1" action="">
-           <p class="preguntas">
+         <h1> Preguntas Compuestas</h1>
+     
+
+         <ul>
+
+         <li>@form(routes.Application.preguntaUnoC()) {        
+         <p class="preguntas">
            ¿Que materias son de dificultad  
-             <select>
-               <option value="1">baja</option>
-               <option value="2">medio</option>
-               <option value="3">alta</option>
+             <select name="p1parte1">
+               <option value="dificultad_bajo">baja</option>
+               <option value="dificultad_medio">medio</option>
+               <option value="dificultad_alto">alta</option>
              </select>
-             y las imparten prefesores con un desempeno global
-             <select>
-               <option value="4">bajo</option>
-               <option value="5">medio</option>
-               <option value="6">alto</option>
+             y las imparten profesores con un desempeno global
+             <select name="p1parte2">
+               <option value="calidad_prof_bajo">bajo</option>
+               <option value="calidad_prof_medio">medio</option>
+               <option value="calidad_prof_alto">alto</option>
              </select> 
            </p>
            <input type="submit" value="Enviar" class="b_submit"></input>
-         </form>
+	        }
+    
          
+         </li>
+         </br>
          </br>
          <hr>
          
-         <form id="Pregunta2" action="">
+         <li>@form(routes.Application.preguntaDosC()) {
            <p class="preguntas">
            ¿Cuales son las materias con un nivel de utilidad  
-             <select>
-               <option value="1">baja</option>
-               <option value="2">medio</option>
-               <option value="3">alta</option>
+             <select name="p2parte1">
+               <option value="utilidad_bajo">baja</option>
+               <option value="utilidad_medio">medio</option>
+               <option value="utilidad_alto">alta</option>
              </select>
              y requieren de un grado de esfuerzo
-             <select>
-               <option value="4">bajo</option>
-               <option value="5">medio</option>
-               <option value="6">alto</option>
+             <select name="p2parte2">
+               <option value="esfuerzo_bajo">bajo</option>
+               <option value="esfuerzo_medio">medio</option>
+               <option value="esfuerzo_alto">alto</option>
              </select> 
            </p>
            <input type="submit" value="Enviar" class="b_submit"></input>
-         </form>
+         }
 
+         
+         </li>
+         </br>
          </br>
          <hr>
 
-         <form id="Pregunta3" action="">
+         <li>@form(routes.Application.preguntaTresC()) {
            <p class="preguntas">
            ¿Que materias tienen un grado de utidad  
-             <select>
-               <option value="1">baja</option>
-               <option value="2">medio</option>
-               <option value="3">alta</option>
+             <select name="p3parte1">
+               <option value="utilidad_bajo">baja</option>
+               <option value="utilidad_medio">medio</option>
+               <option value="utilidad_alto">alta</option>
              </select>
              y las imparten prefesores con un desempeno global
-             <select>
-               <option value="4">bajo</option>
-               <option value="5">medio</option>
-               <option value="6">alto</option>
+             <select name="p3parte2">
+               <option value="calidad_prof_bajo">bajo</option>
+               <option value="calidad_prof_medio">medio</option>
+               <option value="calidad_prof_alto">alto</option>
              </select> 
            </p>
            <input type="submit" value="Enviar" class="b_submit"></input>
-         </form>
+         }
+          </li>
+         </br>
+         </br>
+         
+         </ul> 
 
 }

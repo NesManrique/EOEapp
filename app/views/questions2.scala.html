@@ -1,0 +1,127 @@
+@styles = {
+}
+
+@scripts = {
+}
+
+@import helper._
+
+@main("Preguntas")(styles)(scripts){
+
+         <h1> Preguntas Simples</h1>
+     
+
+         <ul>
+
+           <li>@form(routes.Application.preguntaUnoS()) {        
+           <p class="preguntas">
+             ¿Que materias son de dificultad  
+             <select name="p1">
+               <option value="dificultad_bajo">baja</option>
+               <option value="dificultad_medio">medio</option>
+               <option value="dificultad_alto">alta</option>
+             </select>
+             ?
+           </p>
+           <input type="submit" value="Enviar" class="b_submit"></input>
+	        }
+    
+         </li>
+         </br>
+         </br>
+         <hr>
+         
+         <li>@form(routes.Application.preguntaDosS()) {        
+           <p class="preguntas">
+             ¿Que materias requieren un nivel de esfuerzo  
+             <select name="p2">
+               <option value="esfuerzo_bajo">bajo</option>
+               <option value="esfuerzo_medio">medio</option>
+               <option value="esfuerzo_alto">alto</option>
+             </select>
+             ?
+           </p>
+           <input type="submit" value="Enviar" class="b_submit"></input>
+	        }
+    
+         </li>
+         </br>
+         </br>
+         <hr>
+
+         <li>@form(routes.Application.preguntaTresS()) {        
+           <p class="preguntas">
+             ¿Que materias poseen un nivel de utilidad  
+             <select name="p3">
+               <option value="utilidad_bajo">bajo</option>
+               <option value="utilidad_medio">medio</option>
+               <option value="utilidad_alto">alto</option>
+             </select>
+             ?
+           </p>
+           <input type="submit" value="Enviar" class="b_submit"></input>
+	        }
+    
+         
+         </li>
+         </br>
+         </br>
+         <hr>
+
+         <li>@form(routes.Application.preguntaCuatroS()) {        
+           <p class="preguntas">
+             ¿Que profesores poseen un desempeño global   
+             <select name="p4">
+               <option value="calidad_prof_bajo">bajo</option>
+               <option value="calidad_prof_medio">medio</option>
+               <option value="calidad_prof_alto">alto</option>
+             </select>
+             ?
+           </p>
+           <input type="submit" value="Enviar" class="b_submit"></input>
+	        }
+    
+           </li>
+         </br>
+         </br>
+         <hr>
+
+
+         <li>@form(routes.Application.preguntaCincoS()) {        
+           <p class="preguntas">
+             ¿Que materias poseen una expectativa de calificación    
+             <select name="p5">
+               <option value="expectativa_bajo">baja</option>
+               <option value="expectativa_medio">media</option>
+               <option value="expectativa_alto">alta</option>
+             </select>
+             ?
+           </p>
+           <input type="submit" value="Enviar" class="b_submit"></input>
+	        }
+    
+         </li>
+         </br>
+         </br>
+         <hr>
+         
+
+         <li>@form(routes.Application.preguntaSeisS()) {        
+           <p class="preguntas">
+             ¿Que materias requieren un grado de preparación previa   
+             <select name="p6">
+               <option value="preparacion_bajo">bajo</option>
+               <option value="preparacion_medio">medio</option>
+               <option value="preparacion_alto">alto</option>
+             </select>
+             ?
+           </p>
+           <input type="submit" value="Enviar" class="b_submit"></input>
+	        }
+    
+         </li>
+         </br>
+         </br>
+         <hr>
+
+}

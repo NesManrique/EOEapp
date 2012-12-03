@@ -1,24 +1,61 @@
-
 @styles = {
+	<link href="@routes.Assets.at("stylesheets/jquery-ui-1.9.2.custom.css")" rel="stylesheet" type="text/css"/>
 }
 
 @scripts = {
+	 <script src="@routes.Assets.at("javascripts/jquery-ui-1.9.2.custom.js")" type="text/javascript"></script>
+	 <script>
+	 	$(document).ready(function() {
+	 		$("#faq").accordion({
+				active: false,
+				collapsible: true,
+				heightStyle: "content"
+			});
+		});
+	 </script>
 }
 
 @main("Inicio")(styles)(scripts){
 
-	<h1> Introduccion al Sistema </h1>
-                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean pellentesque augue et libero iaculis id vehicula quam interdum. Aliquam erat volutpat. Nam ultrices pulvinar dolor eget tristique. Maecenas iaculis, mi id venenatis congue, ante erat interdum augue, eu posuere mauris orci et magna. Mauris ornare aliquam nibh, vel ullamcorper ipsum auctor eu. Pellentesque fermentum rhoncus ligula, eu facilisis purus imperdiet sit amet. Sed odio risus, rhoncus sit amet accumsan vel, venenatis non turpis. Nulla vestibulum tortor non quam vestibulum vitae varius nibh sodales. Nunc nec sem ipsum. Aenean pellentesque justo a dolor interdum pharetra dignissim orci tincidunt. Duis ac sapien neque, at tincidunt nisi.<br>
-    
-    
-    Aliquam et erat lorem. Vivamus quis lectus eu justo fringilla laoreet vitae sed libero. Etiam semper sagittis pretium. Maecenas ornare dui auctor nisl suscipit vel luctus erat placerat. Vestibulum ac diam at est placerat luctus ut id tellus. Etiam imperdiet nisi eget neque pretium mattis. Curabitur arcu velit, porta vel aliquam sed, sodales in ante. Mauris placerat adipiscing euismod. Aliquam mi massa, lacinia et laoreet aliquam, vestibulum eu neque. In hac habitasse platea dictumst.<br>
-    
-    			</p><h1> Preguntas Frecuentes </h1>
-                <lu>
-                  <li> Pregunta 1 </li>
-                  <li> Pregunta 2 </li>
-                  <li> Pregunta 3 </li>
-                  <li> Pregunta 4 </li>
-    			</lu>
-
+	<h1> Módulo de Consultas Difusas para la Encuesta de Opinión Estudiantil </h1>
+		<p> 
+        	Bienvenido al módulo de consultas difusas para la Encuesta de Opinión Estudiantil.<br> 
+            <br>
+            Este módulo se encarga de proveer una interfaz más amigable para consultar los datos de la Encuesta Estudiantil.<br>
+            <br>
+            Los parámetros de las preguntas son palabras en lenguaje natural y las respuestas son un ordenamiento descendente de los resultados, es decir, la primera respuesta es la que mejor se ajusta a los parámetros provistos.<br>
+   			<br>
+   			En la sección de <a href="/config">Configuración</a> es posible adaptar los parámetros de cada pregunta según tu preferencia.<br>
+		</p>
+		<h1> Preguntas Frecuentes </h1>
+		<div id="faq">
+        	<h2> ¿Por qué en la configuración los valores aceptan decimales? </h2>
+        		<div>
+        		<p>
+        			Por que la ponderación de las respuestas se hace sobre un promedio de todas las respuestas suministradas.
+        		</p>
+        		</div>
+            <h2> ¿Donde puedo conseguir más información acerca del sistema? </h2>
+            	<div>
+            	<p>
+        			Dirígete a la Coordinación de la Encuesta de Opinión Estudiantil en MYS piso 1.
+        		</p>
+        		</div>
+            <h2> ¿De dónde sale la información reflejada en los resultados? </h2>
+            	<div>
+            	<p>
+        			Los datos son extraídos de las respuestas suministradas por los estudiantes en la Encuesta que se hace trimestralemente
+        			desde el 2001, por eso es importante que te tomes el tiempo de responderla en cada período.
+        		</p>
+        		</div>
+            <h2> ¿Por qué no salen las otras preguntas de la encuesta? </h2>
+            	<div>
+            	<p>
+        			Existen dos razones: actualmente solo 6 de las preguntas de la encuesta son obligatorias, lo cual implica que
+        			poseemos datos estadísticamente significativos para ofrecer una consulta confiable; la segunda razón es que
+        			hicimos un estudio de cuáles serían las preguntas de mayor interés para un estudiante y son las planteadas
+        			en el sistema.
+        		</p>
+        		</div>
+    	</div>
 }
