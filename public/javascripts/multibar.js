@@ -1,20 +1,28 @@
 $(document).ready(function() {
 
+		$("#accordion").accordion({
+			active: false,
+			collapsible: true,
+			heightStyle: "content"
+		});
+
 		var handlers = [1.5,2.5,3.5,4.5];
+		var handlers1 = [1,2,3,4];
+		var handlers2 = [1,1.5,3.9,4.2];
 		
-		function cnum(num){
+		function cnum(num,h){
 			switch(num){
 				case 0:
-					return (handlers[0]-1)*25;
+					return (h[0]-1)*25;
 					break;
 				case 1:
-					return (handlers[1]-1)*25;
+					return (h[1]-1)*25;
 					break;
 				case 2:
-					return (handlers[2]-1)*25;
+					return (h[2]-1)*25;
 					break;
 				case 3:
-					return (handlers[3]-1)*25;
+					return (h[3]-1)*25;
 					break;
 				default:
 					return 0;
@@ -25,126 +33,186 @@ $(document).ready(function() {
 			return (num-1)*25;
 		}
 
-        $( "#weightage_slider" ).slider({ 
-            min: 1,
-            max: 5,
-            step: 0.01,
-            values: handlers, // set four handles
-            slide: function( event, ui ) {
-                // NOTE: during slide, the following sequence occurs: (i) change ui.value (ii) call this function (iii) move the slider handle
+		function makeslider(index,h){
+	        $("#weightage_slider_"+index).slider({ 
+	            min: 1,
+	            max: 5,
+	            step: 0.01,
+	            values: h, // set four handles
+	            slide: function( event, ui ) {
+	                
+	                if(ui.handle == $("#weightage_slider_"+index+"_0").get(0)){
+	                    if(ui.values[0] >= ui.values[1]){
+	                        $("#weightage_slider_"+index).slider('values', 0, ui.values[1]); // triggers change event
+	                        return false;
+	                    } else {
+	                        // handle-0 will move
+	                        // update display of colored handle ranges
+	                        $( "#weightage_slider_a_"+index ).css('left', '0%');
+	                        $( "#weightage_slider_a_"+index ).css('width', (to100(ui.values[0]) + '%'));
+	                        $( "#weightage_slider_b_"+index ).css('left', (to100(ui.values[0]) + '%'));
+	                        $( "#weightage_slider_b_"+index ).css('width', ((to100(ui.values[1])-to100(ui.values[0])) + '%'));
+	                    }
+	                }
+	
+	                if (ui.handle == $("#weightage_slider_"+index+"_1" ).get(0)) {
+	                    if(ui.values[1] <= ui.values[0]){
+	                        $("#weightage_slider_"+index).slider('values', 1, ui.values[0]); // triggers change event
+	                        return false;
+	                    }else if(ui.values[ 1 ] >= ui.values[2]){
+	                        $("#weightage_slider_"+index).slider('values', 1, ui.values[2]); // triggers change event
+	                        return false;
+	                    }else{
+	                        // handle-1 will move
+	                        // update display of colored handle ranges
+	                        $( "#weightage_slider_b_"+index ).css('left', (to100(ui.values[0]) + '%'));
+	                        $( "#weightage_slider_b_"+index ).css('width', ((to100(ui.values[1]) - to100(ui.values[0])) + '%'));
+	                        $( "#weightage_slider_c_"+index ).css('left', (to100(ui.values[1]) + '%'));
+	                        $( "#weightage_slider_c_"+index ).css('width', ((to100(ui.values[2]) - to100(ui.values[1])) + '%'));
+	                    }
+	                }
+	
+	                if(ui.handle == $("#weightage_slider_"+index+"_2").get(0)){
+	                    if(ui.values[2] <= ui.values[1]){
+	                        $("#weightage_slider_"+index).slider('values', 2, ui.values[1]); // triggers change event
+	                        return false;
+	                    }else if(ui.values[2] >= ui.values[3]){
+	                    	$( "#weightage_slider_"+index ).slider('values', 2, ui.values[3]); // triggers change event
+	                        return false;
+	                    } else{
+	                        // handle-2 will move
+	                        // update display of colored handle ranges
+	                        $("#weightage_slider_c_"+index).css('left', (to100(ui.values[1]) + '%'));
+	                        $("#weightage_slider_c_"+index).css('width', ((to100(ui.values[2]) - to100(ui.values[1])) + '%'));
+	                        $("#weightage_slider_d_"+index).css('left', (to100(ui.values[2]) + '%'));
+	                        $("#weightage_slider_d_"+index).css('width', ((to100(ui.values[3]) - to100(ui.values[2])) + '%'));
+	                    }
+	                }
+	                
+	                if (ui.handle == $("#weightage_slider_"+index+"_3").get(0) ) {
+	                    if(ui.values[3] <= ui.values[2]){
+	                        $( "#weightage_slider_"+index ).slider('values', 3, ui.values[2]); // triggers change event
+	                        return false;
+	                    } else{
+	                        // handle-3 will move
+	                        // update display of colored handle ranges
+	                        $("#weightage_slider_d_"+index).css('left', (to100(ui.values[2]) + '%'));
+	                        $("#weightage_slider_d_"+index).css('width', ((to100(ui.values[3]) - to100(ui.values[2])) + '%'));
+	                        $("#weightage_slider_e_"+index).css('left', (to100(ui.values[3]) + '%'));
+	                        $("#weightage_slider_e_"+index).css('width', ((to100(5) - to100(ui.values[3])) + '%'));
+	                    }
+	                }
+	                
+	               	//change input values
+					for (var i = 0; i < ui.values.length; ++i) {
+	            		$("input.slide_val"+index+"[data-index=" + i + "]").val(ui.values[i]);
+	        		}
+	            },
+	            
+	            change: function(event, ui){
+	               // because slide event has function that changes handles value programmatically, the following is necessary
+					
+	                // update display of colored handle ranges
+	                $( "#weightage_slider_a_"+index ).css('left', '0%');
+	                $( "#weightage_slider_a_"+index ).css('width', (to100(ui.values[0]) + '%'));
+	                $( "#weightage_slider_b_"+index ).css('left', (to100(ui.values[0]) + '%'));
+	                $( "#weightage_slider_b_"+index ).css('width', ((to100(ui.values[1]) - to100(ui.values[0])) + '%'));
+	                $( "#weightage_slider_c_"+index ).css('left', (to100(ui.values[1]) + '%'));
+	                $( "#weightage_slider_c_"+index ).css('width', ((to100(ui.values[2]) - to100(ui.values[1])) + '%'));
+	                $( "#weightage_slider_d_"+index ).css('left', (to100(ui.values[2]) + '%'));
+	                $( "#weightage_slider_d_"+index ).css('width', ((to100(ui.values[3]) - to100(ui.values[2])) + '%'));
+	                $( "#weightage_slider_e_"+index ).css('left', (to100(ui.values[3]) + '%'));
+	                $( "#weightage_slider_e_"+index ).css('width', ((to100(5) - to100(ui.values[3])) + '%'));
+	            },
+	            
+	            create: function(event,ui){
+	        		//setting input values	
+		        	for (var i = 0; i < 4; ++i) {
+		            	$("input.slide_val"+index+"[data-index=" + i + "]").val(h[i]);
+		        	}
+		        	
+		        	//label each slider handle
+		        	$( "#weightage_slider_"+index+" > a" ).each(function(ind){
+		            	$(this).attr('id', 'weightage_slider_'+index+'_' + ind);
+		        	});
+		        	
+		        	//the following four div tags result in the display of colored handle ranges
+		        	//the following left attributes and width attributes should be consistent with slider initialization - values array
+		        	$("#weightage_slider_"+index).append("<div id='weightage_slider_a_"+index+"' class='ui-slider-range' style='left:0%;width:"+ cnum(0,h) + "%;background:#ffffff url(/assets/images/noalto.png) no-repeat center;'></div>");
+			        $("#weightage_slider_"+index).append("<div id='weightage_slider_b_"+index+"' class='ui-slider-range' style='left:"+ cnum(0,h) +"%;width:"+ (cnum(1,h)-cnum(0,h)) + "%;background:#ffcb96 url(/assets/images/casialto.png) no-repeat center;'></div>");
+			        $("#weightage_slider_"+index).append("<div id='weightage_slider_c_"+index+"' class='ui-slider-range' style='left:"+ cnum(1,h) +"%;width:"+ (cnum(2,h)-cnum(1,h)) + "%;background:#ff8000 url(/assets/images/alto.png) no-repeat center;'></div>");
+			        $("#weightage_slider_"+index).append("<div id='weightage_slider_d_"+index+"' class='ui-slider-range' style='left:"+ cnum(2,h) +"%;width:"+ (cnum(3,h)-cnum(2,h)) + "%;background:#ffcb96 url(/assets/images/casialto.png) no-repeat center;'></div>");
+			        $("#weightage_slider_"+index).append("<div id='weightage_slider_e_"+index+"' class='ui-slider-range' style='left:"+ cnum(3,h) +"%;width:"+ (100-cnum(3,h)) + "%;background:#ffffff url(/assets/images/noalto.png) no-repeat center;'></div>");
+			   
+			    }
+	        });
+        }
+		
+		// Prevent submit when pressing enter and updating the written value
+		$('.noEnterSubmit').keypress(function(e){
+    		var $this = $(this);
+    		var slidenum = $this.attr("class")[9];
+    		var next = 0;
+    		var prev = 0;
+    		if(e.which == 13){
 
-                // these four lines update the display of handle ranges
-                $( "#weightage_style" ).val( "1" + " - " + $( "#weightage_slider" ).slider('values', 0) );
-                $( "#weightage_design" ).val( $( "#weightage_slider" ).slider('values', 0) + " - " + $( "#weightage_slider" ).slider('values', 1) );
-                $( "#weightage_correctness" ).val( $( "#weightage_slider" ).slider('values', 1) + " - " + $( "#weightage_slider" ).slider('values', 2) );
-                $( "#weightage_others" ).val( $( "#weightage_slider" ).slider('values', 2) + " - " + $( "#weightage_slider" ).slider('values', 3) );
-                $( "#weightage_oob" ).val( $( "#weightage_slider" ).slider('values', 3) + " - " + "5" );
+    			if(e.preventDefault){
+    				e.preventDefault();
+    				//console.log($this.attr("class")[9]+" "+$this.data("index")+" "+$this.val());
+    				
+		    		switch($this.data("index")){
+		    			case 0:
+		    				next = $("#weightage_slider_"+slidenum).slider("values", 1);
+		    				if($this.val()>=next){
+		    					return false;
+		    				}else{
+		    					$("#weightage_slider_"+slidenum).slider("values", $this.data("index"), $this.val());
+		    				}
+		    				break;
+		    			case 1:
+		    				next = $("#weightage_slider_"+slidenum).slider("values", 0);
+			    			prev = $("#weightage_slider_"+slidenum).slider("values", 2);
+		    				if($this.val()>=next){
+		    					return false;
+		    				}else if($this.val()<=prev){
+		    					return false;
+		    				}else{
+		    					$("#weightage_slider_"+slidenum).slider("values", $this.data("index"), $this.val());
+		    				}
+		    				break;
+		    			case 2:
+			    			next = $("#weightage_slider_"+slidenum).slider("values", 1);
+			    			prev = $("#weightage_slider_"+slidenum).slider("values", 3);
+		    				if($this.val()>=next){
+		    					return false;
+		    				}else if($this.val()<=prev){
+		    					return false;
+		    				}else{
+		    					$("#weightage_slider_"+slidenum).slider("values", $this.data("index"), $this.val());
+		    				}
+		    				break;
+		    			case 3:
+		    				prev = $("#weightage_slider_"+slidenum).slider("values", 2);
+		    				if($this.val()<=prev){
+		    					return false;
+		    				}else{
+		    					$("#weightage_slider_"+slidenum).slider("values", $this.data("index"), $this.val());
+		    				}
+		    				break;
+		    			default:
+		    				return false;
+		    				break;
+		    		}
 
-                if ( ui.handle == $( "#weightage_slider_0" ).get(0) ) {
-                    if(ui.values[ 0 ] >= ui.values[ 1 ]){
-                        $( "#weightage_slider" ).slider('values', 0, ui.values[ 1 ]); // triggers change event
-                        return false;
-                    } else {
-                        // handle-0 will move
-                        // update display of colored handle ranges
-                        $( "#weightage_slider_a" ).css('left', '0%');
-                        $( "#weightage_slider_a" ).css('width', (to100(ui.values[0]) + '%'));
-                        $( "#weightage_slider_b" ).css('left', (to100(ui.values[0]) + '%'));
-                        $( "#weightage_slider_b" ).css('width', ((to100(ui.values[1])-to100(ui.values[0])) + '%'));
-                    }
+                }else{
+                	e.returnValue = false;
                 }
-
-                if ( ui.handle == $( "#weightage_slider_1" ).get(0) ) {
-                    if(ui.values[ 1 ] <= ui.values[ 0 ]){
-                        $( "#weightage_slider" ).slider('values', 1, ui.values[ 0 ]); // triggers change event
-                        return false;
-                    }else if(ui.values[ 1 ] >= ui.values[ 2 ]){
-                        $( "#weightage_slider" ).slider('values', 1, ui.values[ 2 ]); // triggers change event
-                        return false;
-                    }else{
-                        // handle-1 will move
-                        // update display of colored handle ranges
-                        $( "#weightage_slider_b" ).css('left', (to100(ui.values[0]) + '%'));
-                        $( "#weightage_slider_b" ).css('width', ((to100(ui.values[1]) - to100(ui.values[0])) + '%'));
-                        $( "#weightage_slider_c" ).css('left', (to100(ui.values[1]) + '%'));
-                        $( "#weightage_slider_c" ).css('width', ((to100(ui.values[2]) - to100(ui.values[1])) + '%'));
-                    }
-                }
-
-                if ( ui.handle == $( "#weightage_slider_2" ).get(0) ) {
-                    if(ui.values[ 2 ] <= ui.values[ 1 ]){
-                        $( "#weightage_slider" ).slider('values', 2, ui.values[ 1 ]); // triggers change event
-                        return false;
-                    }else if(ui.values[ 2 ] >= ui.values[ 3 ]){
-                    	$( "#weightage_slider" ).slider('values', 2, ui.values[ 3 ]); // triggers change event
-                        return false;
-                    } else{
-                        // handle-2 will move
-                        // update display of colored handle ranges
-                        $( "#weightage_slider_c" ).css('left', (to100(ui.values[1]) + '%'));
-                        $( "#weightage_slider_c" ).css('width', ((to100(ui.values[2]) - to100(ui.values[1])) + '%'));
-                        $( "#weightage_slider_d" ).css('left', (to100(ui.values[2]) + '%'));
-                        $( "#weightage_slider_d" ).css('width', ((to100(ui.values[3]) - to100(ui.values[2])) + '%'));
-                    }
-                }
-                
-                if ( ui.handle == $( "#weightage_slider_3" ).get(0) ) {
-                    if(ui.values[ 3 ] <= ui.values[ 2 ]){
-                        $( "#weightage_slider" ).slider('values', 3, ui.values[ 2 ]); // triggers change event
-                        return false;
-                    } else{
-                        // handle-3 will move
-                        // update display of colored handle ranges
-                        $( "#weightage_slider_d" ).css('left', (to100(ui.values[2]) + '%'));
-                        $( "#weightage_slider_d" ).css('width', ((to100(ui.values[3]) - to100(ui.values[2])) + '%'));
-                        $( "#weightage_slider_e" ).css('left', (to100(ui.values[3]) + '%'));
-                        $( "#weightage_slider_e" ).css('width', ((to100(5) - to100(ui.values[3])) + '%'));
-                    }
-                }
-            }, 
-            change: function( event, ui ) {
-                // because slide event has function that changes handles' value programmatically, the following is necessary
-
-                // these four lines update the display of handle ranges
-                $( "#weightage_style" ).val( "1" + " - " + $( "#weightage_slider" ).slider('values', 0) );
-                $( "#weightage_design" ).val( $( "#weightage_slider" ).slider('values', 0) + " - " + $( "#weightage_slider" ).slider('values', 1) );
-                $( "#weightage_correctness" ).val( $( "#weightage_slider" ).slider('values', 1) + " - " + $( "#weightage_slider" ).slider('values', 2) );
-                $( "#weightage_others" ).val( $( "#weightage_slider" ).slider('values', 2) + " - " + $( "#weightage_slider" ).slider('values', 3) );
-                $( "#weightage_oob" ).val( $( "#weightage_slider" ).slider('values', 3) + " - " + "5" );
-
-                // update display of colored handle ranges
-                $( "#weightage_slider_a" ).css('left', '0%');
-                $( "#weightage_slider_a" ).css('width', (to100(ui.values[0]) + '%'));
-                $( "#weightage_slider_b" ).css('left', (to100(ui.values[0]) + '%'));
-                $( "#weightage_slider_b" ).css('width', ((to100(ui.values[1]) - to100(ui.values[0])) + '%'));
-                $( "#weightage_slider_c" ).css('left', (to100(ui.values[1]) + '%'));
-                $( "#weightage_slider_c" ).css('width', ((to100(ui.values[2]) - to100(ui.values[1])) + '%'));
-                $( "#weightage_slider_d" ).css('left', (to100(ui.values[2]) + '%'));
-                $( "#weightage_slider_d" ).css('width', ((to100(ui.values[3]) - to100(ui.values[2])) + '%'));
-                $( "#weightage_slider_e" ).css('left', (to100(ui.values[3]) + '%'));
-                $( "#weightage_slider_e" ).css('width', ((to100(5) - to100(ui.values[3])) + '%'));
-            }
-        });
-
-        // label each slider handle
-        $( "#weightage_slider > a" ).each(function(index){
-            $(this).attr('id', 'weightage_slider_' + index);
-            $(this).attr('title', 'slider handle ' + index);    
-        });
-
-        // the following four div tags result in the display of colored handle ranges
-        // the following left attributes and width attributes should be consistent with slider initialization - values array
-        $('#weightage_slider').append("<div id='weightage_slider_a' class='ui-slider-range' style='left:0%;width:"+ cnum(0) + "%;background:#ffffff url(/assets/images/noalto.png) no-repeat center;'></div>");
-        $('#weightage_slider').append("<div id='weightage_slider_b' class='ui-slider-range' style='left:"+ cnum(0) +"%;width:"+ (cnum(1)-cnum(0)) + "%;background:#ffcb96 url(/assets/images/casialto.png) no-repeat center;'></div>");
-        $('#weightage_slider').append("<div id='weightage_slider_c' class='ui-slider-range' style='left:"+ cnum(1) +"%;width:"+ (cnum(2)-cnum(1)) + "%;background:#ff8000 url(/assets/images/alto.png) no-repeat center;'></div>");
-        $('#weightage_slider').append("<div id='weightage_slider_d' class='ui-slider-range' style='left:"+ cnum(2) +"%;width:"+ (cnum(3)-cnum(2)) + "%;background:#ffcb96 url(/assets/images/casialto.png) no-repeat center;'></div>");
-        $('#weightage_slider').append("<div id='weightage_slider_e' class='ui-slider-range' style='left:"+ cnum(3) +"%;width:"+ (100-cnum(3)) + "%;background:#ffffff url(/assets/images/noalto.png) no-repeat center;'></div>");
-
-        // these four lines display the initial handle ranges
-        $( "#weightage_style" ).val( "1" + " - " + $( "#weightage_slider" ).slider('values', 0) );
-        $( "#weightage_design" ).val( $( "#weightage_slider" ).slider('values', 0) + " - " + $( "#weightage_slider" ).slider('values', 1) );
-        $( "#weightage_correctness" ).val( $( "#weightage_slider" ).slider('values', 1) + " - " + $( "#weightage_slider" ).slider('values', 2) );
-        $( "#weightage_others" ).val( $( "#weightage_slider" ).slider('values', 2) + " - " + $( "#weightage_slider" ).slider('values', 3) );
-        $( "#weightage_oob" ).val( $( "#weightage_slider" ).slider('values', 3) + " - " + "5" );
+    		}
+    		
+		});
+		
+		makeslider(0,handlers);
+		makeslider(1,handlers1);
+		makeslider(2,handlers2);
         
-          });
+});

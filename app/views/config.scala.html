@@ -15,40 +15,101 @@
 		
 		<h2>Configura tus preferencias para las consultas</h2>
 	
-		<h3> Alto </h3>
-
-         <p>
-            <label>OOBI:</label>
-            <input type="text" id="weightage_style" style="border:0; color:#f6931f; font-weight:bold;" />
-            <br />
-            <label>Creciente:</label>
-            <input type="text" id="weightage_design" style="border:0; color:#f6931f; font-weight:bold;" />
-            <br />
-            <label>Core:</label>
-            <input type="text" id="weightage_correctness" style="border:0; color:#f6931f; font-weight:bold;" />
-            <br />
-            <label>Decreciente:</label>
-            <input type="text" id="weightage_others" style="border:0; color:#f6931f; font-weight:bold;" />
-            <br />
-            <label>OOBF:</label>
-            <input type="text" id="weightage_oob" style="border:0; color:#f6931f; font-weight:bold;" />
-            <br />
-         </p>
-        
-        
-        <div id="weightage_slider"></div>
-        <div id="ruler"> </div>​
-	
-		</br>
-	    <hr>
-	    
-	    <h3> Medio </h3>
-	
-	    </br>
-	    <hr>
-	    
-	    <h3> Bajo </h3>
+		<div id="accordion">
+			<h3> Alto </h3>
+			<div>
 	         
-	 	<input type="submit" value="Actualizar" class="b_submit"></input>
+	         <table id="vals">
+	         <tr>
+		         <td>
+		         	<label>No es alto:</label>
+		         	<input type="number" class="slide_val0 noEnterSubmit" data-index="0" size="1" step="0.01"/>
+		         </td>
+		         <td>
+		         	<label>Empieza a ser alto:</label>
+		         	<input type="number" class="slide_val0 noEnterSubmit" data-index="1" size="1" step="0.01"/>
+		         </td>
+		         <td>
+		         	<label>Es alto:</label>
+		         	<input type="number" class="slide_val0 noEnterSubmit" data-index="2" size="1" step="0.01"/>
+		         </td>
+		         <td>
+		         	<label>Deja de ser alto:</label>
+		         	<input type="number" class="slide_val0 noEnterSubmit" data-index="3" size="1" step="0.01"/>
+		         </td>
+	         </tr>
+	         </table>
+	        
+	        <div id="weightage_slider_0"></div>
+	        <div id="ruler"> </div>
+	        <input type="submit" value="Actualizar" class="b_submit"></input>​
+			</div>
+			
+			</br>
+		    <hr>
+		    
+		    <h3> Medio </h3>
+			<div>
+			
+			<table id="vals">
+	         <tr>
+		         <td>
+		         	<label>No es medio:</label>
+		         	<input type="number" class="slide_val1 noEnterSubmit" data-index="0" size="1" step="0.01"/>
+		         </td>
+		         <td>
+		         	<label>Empieza a ser medio:</label>
+		         	<input type="number" class="slide_val1 noEnterSubmit" data-index="1" size="1" step="0.01"/>
+		         </td>
+		         <td>
+		         	<label>Es medio:</label>
+		         	<input type="number" class="slide_val1 noEnterSubmit" data-index="2" size="1" step="0.01"/>
+		         </td>
+		         <td>
+		         	<label>Deja de ser medio:</label>
+		         	<input type="number" class="slide_val1 noEnterSubmit" data-index="3" size="1" step="0.01"/>
+		         </td>
+	         </tr>
+	         </table>
+	        
+	        <div id="weightage_slider_1"></div>
+	        <div id="ruler"> </div>
+	        <input type="submit" value="Actualizar" class="b_submit"></input>
+			
+			</div>
+		    </br>
+		    <hr>
+		    
+		    <h3> Bajo </h3>
+		    <div>
+		    
+		    <table id="vals">
+	         <tr>
+		         <td>
+		         	<label>No es bajo:</label>
+		         	<input type="number" class="slide_val2 noEnterSubmit" data-index="0" size="1" step="0.01"/>
+		         </td>
+		         <td>
+		         	<label>Empieza a ser bajo:</label>
+		         	<input type="number" class="slide_val2 noEnterSubmit" data-index="1" size="1" step="0.01"/>
+		         </td>
+		         <td>
+		         	<label>Es bajo:</label>
+		         	<input type="number" class="slide_val2 noEnterSubmit" data-index="2" size="1" step="0.01"/>
+		         </td>
+		         <td>
+		         	<label>Deja de ser bajo:</label>
+		         	<input type="number" class="slide_val2 noEnterSubmit" data-index="3" size="1" step="0.01"/>
+		         </td>
+	         </tr>
+	         </table>
+	        
+	        <div id="weightage_slider_2"></div>
+	        <div id="ruler"> </div>
+		 	<input type="submit" value="Actualizar" class="b_submit"></input>
+		 	
+		 	</div>
+	 	
+	 	</div>
 	 </form>
 }
