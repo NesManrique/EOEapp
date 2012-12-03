@@ -286,17 +286,18 @@ margin-top:30px;
 }
 
 #ruler {
-	margin-left:6px;
-	height: 30px;
-	width: 500px;
-	background-color: #999;
-	background-image: url(../images/ruler.jpg);
+	margin-top: 5px;
+	margin-left: -6px;
+	height: 33px;
+	width: 541px;
+	background-color: #eee;
+	background-image: url(../images/ruler.png);
 	background-repeat: no-repeat;
 	background-position: left top;
 }
 
-#weightage_slider {
-	margin-left:5px;
+#weightage_slider_0, #weightage_slider_1, weightage_slider_2 {
+	margin-left:0px;
 	font-size:12px;
-	width:500px;
+	width:530px;
 }

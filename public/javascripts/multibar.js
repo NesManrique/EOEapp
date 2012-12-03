@@ -33,7 +33,8 @@ $(document).ready(function() {
 			return (num-1)*25;
 		}
 
-		function makeslider(index,h){
+		//Slider maker index is for the container identifier, h is the values array and word is for the images in the slider
+		function makeslider(index,h,word){
 	        $("#weightage_slider_"+index).slider({ 
 	            min: 1,
 	            max: 5,
@@ -138,11 +139,11 @@ $(document).ready(function() {
 		        	
 		        	//the following four div tags result in the display of colored handle ranges
 		        	//the following left attributes and width attributes should be consistent with slider initialization - values array
-		        	$("#weightage_slider_"+index).append("<div id='weightage_slider_a_"+index+"' class='ui-slider-range' style='left:0%;width:"+ cnum(0,h) + "%;background:#ffffff url(/assets/images/noalto.png) no-repeat center;'></div>");
-			        $("#weightage_slider_"+index).append("<div id='weightage_slider_b_"+index+"' class='ui-slider-range' style='left:"+ cnum(0,h) +"%;width:"+ (cnum(1,h)-cnum(0,h)) + "%;background:#ffcb96 url(/assets/images/casialto.png) no-repeat center;'></div>");
-			        $("#weightage_slider_"+index).append("<div id='weightage_slider_c_"+index+"' class='ui-slider-range' style='left:"+ cnum(1,h) +"%;width:"+ (cnum(2,h)-cnum(1,h)) + "%;background:#ff8000 url(/assets/images/alto.png) no-repeat center;'></div>");
-			        $("#weightage_slider_"+index).append("<div id='weightage_slider_d_"+index+"' class='ui-slider-range' style='left:"+ cnum(2,h) +"%;width:"+ (cnum(3,h)-cnum(2,h)) + "%;background:#ffcb96 url(/assets/images/casialto.png) no-repeat center;'></div>");
-			        $("#weightage_slider_"+index).append("<div id='weightage_slider_e_"+index+"' class='ui-slider-range' style='left:"+ cnum(3,h) +"%;width:"+ (100-cnum(3,h)) + "%;background:#ffffff url(/assets/images/noalto.png) no-repeat center;'></div>");
+		        	$("#weightage_slider_"+index).append("<div id='weightage_slider_a_"+index+"' class='ui-slider-range' style='left:0%;width:"+ cnum(0,h) + "%;background:#ffffff url(/assets/images/no"+word+".png) no-repeat center;'></div>");
+			        $("#weightage_slider_"+index).append("<div id='weightage_slider_b_"+index+"' class='ui-slider-range' style='left:"+ cnum(0,h) +"%;width:"+ (cnum(1,h)-cnum(0,h)) + "%;background:#ffcb96 url(/assets/images/casi"+word+".png) no-repeat center;'></div>");
+			        $("#weightage_slider_"+index).append("<div id='weightage_slider_c_"+index+"' class='ui-slider-range' style='left:"+ cnum(1,h) +"%;width:"+ (cnum(2,h)-cnum(1,h)) + "%;background:#ff8000 url(/assets/images/"+word+".png) no-repeat center;'></div>");
+			        $("#weightage_slider_"+index).append("<div id='weightage_slider_d_"+index+"' class='ui-slider-range' style='left:"+ cnum(2,h) +"%;width:"+ (cnum(3,h)-cnum(2,h)) + "%;background:#ffcb96 url(/assets/images/casi"+word+".png) no-repeat center;'></div>");
+			        $("#weightage_slider_"+index).append("<div id='weightage_slider_e_"+index+"' class='ui-slider-range' style='left:"+ cnum(3,h) +"%;width:"+ (100-cnum(3,h)) + "%;background:#ffffff url(/assets/images/no"+word+".png) no-repeat center;'></div>");
 			   
 			    }
 	        });
@@ -211,8 +212,8 @@ $(document).ready(function() {
     		
 		});
 		
-		makeslider(0,handlers);
-		makeslider(1,handlers1);
-		makeslider(2,handlers2);
+		makeslider(0,handlers,"alto");
+		makeslider(1,handlers1,"medio");
+		makeslider(2,handlers2,"bajo");
         
 });
