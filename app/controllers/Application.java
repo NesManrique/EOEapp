@@ -44,7 +44,7 @@ public class Application extends Controller {
 	
 	private static ConvertirExpresion traductor = new ConvertirExpresion();
 	
-	// M�todo para imprimir el dominio de un conjunto difuso.
+	// Metodo para imprimir el dominio de un conjunto difuso.
 	private static void imprimirDominio(Dominio dominio) {
 
 		if (dominio instanceof DominioEscalar) {
@@ -65,7 +65,7 @@ public class Application extends Controller {
 
 	}
 
-	// M�todo para imprimir un conjunto difuso.
+	// Metodo para imprimir un conjunto difuso.
 	private static void imprimirConjunto(ConjuntoDifuso conjunto) {
 
 		if (conjunto instanceof ConjuntoDifusoExtension) {
@@ -193,13 +193,11 @@ public class Application extends Controller {
 			// Resultado de la ejecuci�n de la sentencia difusa.
 			int resultadoInstruccion = ((ResultadoSQLfi) obj).getResultado();
 			
-			System.out.println("AHHHHHHHHHH "+tipoInstruccion+" "+resultadoInstruccion);
-			
-			switch (tipoInstruccion) {
+         switch (tipoInstruccion) {
 
 			case 1:
-				System.out.println("Predicado Difuso Conjunto Creado.\n");
-				break;
+             System.out.println("Predicado Difuso Conjunto Creado.\n");
+             break;
 
 			case 2:
 				System.out.println("Predicado Difuso Condicion Creado.\n");
@@ -528,7 +526,7 @@ public class Application extends Controller {
         String sesion="0741051";
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
-        String predicado= sesion+"_"+values.get("p1")[0];
+        String predicado= values.get("p1")[0]+"_"+sesion;
         String consulta;
         
         
@@ -562,7 +560,7 @@ public class Application extends Controller {
         String sesion="0741051";
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
-        String predicado= sesion+"_"+values.get("p2")[0];
+        String predicado= values.get("p2")[0]+"_"+sesion;
         String consulta;
         
         		
@@ -595,7 +593,7 @@ public class Application extends Controller {
         String sesion="0741051";
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
-        String predicado= sesion+"_"+values.get("p3")[0];
+        String predicado= values.get("p3")[0]+"_"+sesion;
         String consulta;
         
         		
@@ -626,7 +624,7 @@ public class Application extends Controller {
         String sesion="0741051";
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
-        String predicado= sesion+"_"+values.get("p4")[0];
+        String predicado= values.get("p4")[0]+"_"+sesion;
         String consulta;
         
         		
@@ -656,7 +654,7 @@ public class Application extends Controller {
         String sesion="0741051";
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
-        String predicado= sesion+"_"+values.get("p5")[0];
+        String predicado= values.get("p5")[0]+"_"+sesion;
         String consulta;
         
         		
@@ -687,7 +685,7 @@ public class Application extends Controller {
         String sesion="0741051";
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
-        String predicado= sesion+"_"+values.get("p6")[0];
+        String predicado= values.get("p6")[0]+"_"+sesion;
         String consulta;
         
         		
@@ -718,8 +716,8 @@ public class Application extends Controller {
         String sesion="0741051";
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
-        String predicado1= sesion+"_"+values.get("p1parte1")[0];
-        String predicado2= sesion+"_"+values.get("p1parte2")[0];
+		  String predicado1= values.get("p1parte1")[0]+"_"+sesion;
+		  String predicado2= values.get("p1parte2")[0]+"_"+sesion;
         String consulta;		
 
         
@@ -753,8 +751,8 @@ public class Application extends Controller {
         String sesion="0741051";
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
-        String predicado1= sesion+"_"+values.get("p2parte1")[0];
-        String predicado2= sesion+"_"+values.get("p2parte2")[0];
+        String predicado1= values.get("p2parte1")[0]+"_"+sesion;
+        String predicado2= values.get("p2parte2")[0]+"_"+sesion;
         String consulta;		
 
         
@@ -786,8 +784,8 @@ public class Application extends Controller {
         String sesion="0741051";
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
-        String predicado1= sesion+"_"+values.get("p3parte1")[0];
-        String predicado2= sesion+"_"+values.get("p3parte2")[0];
+        String predicado1= values.get("p3parte1")[0]+"_"+sesion;
+        String predicado2= values.get("p3parte2")[0]+"_"+sesion;
         String consulta;		
 
         
