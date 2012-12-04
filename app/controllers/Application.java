@@ -820,7 +820,7 @@ public class Application extends Controller {
 	        
 	        String pred = values.get("pred")[0];
 	        
-	        String sesion="0741051";
+	        String sesion=session("id");
 	        String respuesta="";
 	        
 	        String predicados []= { "dificultad_"+pred+"_"+sesion,
