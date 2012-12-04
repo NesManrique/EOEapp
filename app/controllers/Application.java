@@ -3,11 +3,12 @@ package controllers;
 import play.*;
 import play.mvc.*;
 import play.data.DynamicForm;
+
+import java.util.ArrayList;
 import java.util.Map;
 import views.html.*;
 import java.lang.String;
 import java.sql.*;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.FieldPosition;
@@ -15,10 +16,138 @@ import conf.VariablesAmbiente;
 import Cliente.ClienteSQLfi;
 import Cliente.ClienteSQLfiImpl;
 import Despachador.ConjuntoResultado;
+import Despachador.ResultadoSQLfi;
 import Despachador.Mu;
 import Despachador.ObjetoSQLfi;
+import ObjetoDDL.PredicadoDifusoConjunto;
+import ObjetoDDL.TerminoDifuso;
+import ObjetoExpresion.ConjuntoDifuso;
+import ObjetoExpresion.ConjuntoDifusoExpresion;
+import ObjetoExpresion.ConjuntoDifusoExtension;
+import ObjetoExpresion.ConjuntoDifusoExtensionEscalar;
+import ObjetoExpresion.ConjuntoDifusoTrapecio;
+import ObjetoExpresion.Dominio;
+import ObjetoExpresion.DominioEscalar;
+import ObjetoExpresion.DominioFecha;
+import ObjetoExpresion.DominioHora;
+import ObjetoExpresion.DominioNumerico;
+import ObjetoExpresion.DominioTupla;
+import ObjetoExpresion.ElemExtEscalar;
+import ObjetoExpresion.ElemExtNum;
+import ObjetoExpresion.ElementoExtension;
+import Traductor.ConvertirExpresion;
 
 public class Application extends Controller {
+	
+	private static double DOMINIO_INFERIOR;
+	private static double DOMINIO_SUPERIOR;
+	
+	private static ConvertirExpresion traductor = new ConvertirExpresion();
+	
+	// M�todo para imprimir el dominio de un conjunto difuso.
+	private static void imprimirDominio(Dominio dominio) {
+
+		if (dominio instanceof DominioEscalar) {
+			System.out.println("Dominio Escalar: " + ((DominioEscalar) dominio).obtenerEscalar());
+		} else if (dominio instanceof DominioNumerico) {
+			System.out.print(((DominioNumerico) dominio).getInferior());
+			System.out.print("..");
+			System.out.println(((DominioNumerico) dominio).getSuperior());			
+			DOMINIO_INFERIOR = ((DominioNumerico) dominio).getInferior();
+			DOMINIO_SUPERIOR = ((DominioNumerico) dominio).getSuperior();
+		} else if (dominio instanceof DominioFecha) {
+			System.out.println("Dominio Fecha: " + ((DominioFecha) dominio).getFecha());
+		} else if (dominio instanceof DominioHora) { // Fecha - hora
+			System.out.println("Dominio Hora: " + ((DominioHora) dominio).getDominioHora());
+		} else if(dominio instanceof DominioTupla) {
+			System.out.println("No implementado.");
+		}
+
+	}
+
+	// M�todo para imprimir un conjunto difuso.
+	private static void imprimirConjunto(ConjuntoDifuso conjunto) {
+
+		if (conjunto instanceof ConjuntoDifusoExtension) {
+
+			int longitud = ((ConjuntoDifusoExtension)conjunto).numeroElementos();
+			ArrayList<ElementoExtension> elementos = ((ConjuntoDifusoExtension)conjunto).getElementos();
+			System.out.print("Conjunto Extension --> {");
+			if (conjunto instanceof ConjuntoDifusoExtensionEscalar) {
+				ElemExtEscalar elemento = null;
+				for (int cont = 0; cont < longitud - 1; cont++) {
+					elemento = (ElemExtEscalar) elementos.get(cont);
+					System.out.print(elemento.getEscalar());
+					System.out.print("/");
+					System.out.print(elemento.getMembresia());
+					System.out.print(", ");
+				}
+				elemento = (ElemExtEscalar) elementos.get(longitud - 1);
+				System.out.print(elemento.getEscalar());
+				System.out.print("/");
+				System.out.print(elemento.getMembresia());
+				System.out.print("}");
+			} else {
+				ElemExtNum elemento = null;
+				for (int cont = 0; cont < longitud - 1; cont++) {
+					elemento = (ElemExtNum) elementos.get(cont);
+					System.out.print(elemento.getNum());
+					System.out.print("/");
+					System.out.print(elemento.getMembresia());
+					System.out.print(", ");					
+				}
+				elemento = (ElemExtNum) elementos.get(longitud - 1);
+				System.out.print(elemento.getNum());
+				System.out.print("/");
+				System.out.print(elemento.getMembresia());
+				System.out.println("}");
+			}
+
+		} else if (conjunto instanceof ConjuntoDifusoTrapecio) {
+
+			double coordA = ((ConjuntoDifusoTrapecio)conjunto).getCoordA();
+			double coordB = ((ConjuntoDifusoTrapecio)conjunto).getCoordB();
+			double coordC = ((ConjuntoDifusoTrapecio)conjunto).getCoordC();
+			double coordD = ((ConjuntoDifusoTrapecio)conjunto).getCoordD();
+
+			System.out.print("Trapecio --> (");
+			if ((coordA == coordB) && (coordB == DOMINIO_SUPERIOR)) {
+				System.out.print("INFINITO");
+				System.out.print(", ");
+				System.out.print("INFINITO");
+			} else if ((coordA == coordB) && (coordB == DOMINIO_INFERIOR)) {
+				System.out.print("INFINITO");
+				System.out.print(", ");
+				System.out.print("INFINITO");
+			} else if (coordA == DOMINIO_INFERIOR) {
+				System.out.print("INFINITO");
+				System.out.print(", ");
+				System.out.print(((ConjuntoDifusoTrapecio)conjunto).getCoordB());
+			} else {
+				System.out.print(((ConjuntoDifusoTrapecio)conjunto).getCoordA());
+				System.out.print(", ");
+				System.out.print(((ConjuntoDifusoTrapecio)conjunto).getCoordB());
+			}
+			System.out.print(", ");
+			if ((coordC == coordD) && (coordD == DOMINIO_SUPERIOR)) {
+				System.out.print("INFINITO");
+				System.out.print(", ");
+				System.out.print("INFINITO");
+			} else if (coordD == DOMINIO_SUPERIOR) {
+				System.out.print(((ConjuntoDifusoTrapecio)conjunto).getCoordC());
+				System.out.print(", ");
+				System.out.print("INFINITO");
+			} else {
+				System.out.print(((ConjuntoDifusoTrapecio)conjunto).getCoordC());
+				System.out.print(", ");
+				System.out.print(((ConjuntoDifusoTrapecio)conjunto).getCoordD());
+			}			
+			System.out.println(")");
+
+		} else {	// Conjunto expresion		
+			System.out.println("Conjunto por Expresion --> " + traductor.expresionXCadena(((ConjuntoDifusoExpresion)conjunto).getExpresion()));
+		}
+	}
   
     public static String EjecutarConsulta(String consulta){
 
@@ -39,7 +168,7 @@ public class Application extends Controller {
         }
 
 
-        ObjetoSQLfi obj ;
+        ObjetoSQLfi obj;
 
         try{
             obj = app.ejecutarSentencia(consulta);
@@ -52,7 +181,209 @@ public class Application extends Controller {
                     "comuniquese con nuestro administrador mediante el correo wm@consulta.dii.usb.ve</p>");
         }   
         
-        StringBuffer resultado= ConjuntoRes(obj);
+        StringBuffer resultado= new StringBuffer("No puedo manejar una respuesta de tipo ");
+        
+        if(obj instanceof ConjuntoResultado){
+        	resultado= ConjuntoRes(obj);
+        }else if(obj instanceof ResultadoSQLfi){
+        	
+        	// Tipo de t�rmino difuso.
+			int tipoInstruccion = ((ResultadoSQLfi) obj).getTipo();	
+			
+			// Resultado de la ejecuci�n de la sentencia difusa.
+			int resultadoInstruccion = ((ResultadoSQLfi) obj).getResultado();
+			
+			System.out.println("AHHHHHHHHHH "+tipoInstruccion+" "+resultadoInstruccion);
+			
+			switch (tipoInstruccion) {
+
+			case 1:
+				System.out.println("Predicado Difuso Conjunto Creado.\n");
+				break;
+
+			case 2:
+				System.out.println("Predicado Difuso Condicion Creado.\n");
+				break;
+
+			case 3:
+				System.out.println("Cuantificador Difuso Creado.\n");
+				break;
+
+			case 4:
+				System.out.println("Modificador Difuso Potencia Creado.\n");
+				break;
+
+			case 5:
+				System.out.println("Modificador Difuso Traslacion Creado.\n");
+				break;
+
+			case 6:
+				System.out.println("Modificador Difuso Norma Creado.\n");
+				break;
+
+			case 7:
+				System.out.println("Conector Difuso Creado.\n");
+				break;
+
+			case 8:
+				System.out.println("Comparador Difuso Conjunto Creado.\n");
+				break;
+
+			case 9:
+				System.out.println("Comparador Difuso Relacion Creado.\n");
+				break;
+
+			case 10:
+				System.out.println("Tabla Precisa Creada.\n");
+				break;
+
+			case 11:
+				System.out.println("Tabla Difusa Creada.\n");
+				break;
+
+			case 12:
+				System.out.println("Vista Precisa Creada.\n");
+				break;
+
+			case 13:
+				System.out.println("Vista Difusa Creada.");
+				break;
+
+			case 14:
+				System.out.println("Vista Difusa IDB Creada.");
+				break;
+
+			case 15:
+				System.out.println("Asercion Difusa Creada.\n");
+				break;
+
+			case 16:
+				System.out.println("TAD Creado.");
+				break;
+
+			case 17:
+				System.out.println("Insertado " + resultadoInstruccion + " filas(s) en la tabla.");
+				break;
+
+			case 18:
+				System.out.println("Eliminando " + resultadoInstruccion + " filas(s) en la tabla.");
+				break;
+
+			case 19:
+				System.out.println("Actualizando " + resultadoInstruccion + " fila(s) en la tabla.");
+				break;
+
+			case 20:
+				System.out.println("Funcion Difusa Creada.");
+				break;
+
+			case 21:
+				System.out.println("Procedimiento Difuso Creado.");
+				break;
+
+			case 22:
+				System.out.println("Disparador Difuso Creado.");
+				break;
+
+			case 23:
+				System.out.println("Cabecera de Paquete Difuso Creado.");
+				break;
+
+			case 24:
+				System.out.println("Cuerpo de Paquete Difuso Creado.");
+				break;
+
+			case 25:
+				System.out.println("PL/SQL Difuso Executado.");
+				break;
+
+			case 51:
+				System.out.println("Predicado Difuso Eliminado.");
+				break;
+
+			case 52:
+				System.out.println("Modificador Difuso Eliminado.");
+				break;
+
+			case 53:
+				System.out.println("Conector Difuso Eliminado.");
+				break;
+
+			case 54:
+				System.out.println("Comparador Difuso Eliminado.");
+				break;
+
+			case 55:
+				System.out.println("Cuantificador Difuso Eliminado.");
+				break;
+
+			case 56:
+				System.out.println("Asercion Difusa Eliminada.");
+				break;
+
+			case 57:
+				System.out.println("Tabla Precisa Eliminada.");
+				break;
+
+			case 58:
+				System.out.println("Vista Eliminada.");
+				break;
+
+			case 59:
+				System.out.println("Vista Eliminada.");
+				break;
+
+			case 60:
+				System.out.println("Tabla Difusa Eliminada.");
+				break;
+
+			case 61:
+				System.out.println("Vista Difusa Eliminada.");
+				break;
+
+			case 71:
+				System.out.println("Funcion Difusa Eliminada.");
+				break;
+
+			case 72:
+				System.out.println("Procedimiento Difuso Eliminado.");
+				break;
+
+			case 73:
+				System.out.println("Disparador Difuso Eliminado.");
+				break;
+
+			case 74:
+				System.out.println("Cabecera de Paquete Difuso Eliminado.");
+				break;
+
+			case 75:
+				System.out.println("Cuerpo de Paquete Difuso Eliminado.");
+				break;
+
+			default:
+				System.out.println("Sentencia difusa no esperada.");
+			}
+			
+        }else if(obj instanceof TerminoDifuso){
+        	
+        	TerminoDifuso objeto = (TerminoDifuso)obj;
+        	
+        	if (objeto instanceof PredicadoDifusoConjunto) {
+				PredicadoDifusoConjunto predicado = (PredicadoDifusoConjunto) objeto;
+				
+				System.out.println("Predicado --> " + predicado.getId());
+				imprimirDominio(predicado.getDominio());
+				imprimirConjunto(predicado.getConjunto());
+				
+				return predicado.getId()+" "+predicado.getDominio()+" "+predicado.getConjunto();
+
+			}else{
+				return "No puedo manejar una respuesta de tipo "+objeto.getClass();
+			}
+        }else{
+        	return "Dio null";
+        }
         
         return (resultado.toString());
         
@@ -490,35 +821,44 @@ public class Application extends Controller {
 	        String pred = values.get("pred")[0];
 	        
 	        String sesion="0741051";
-	        String consulta="";
+	        String respuesta="";
 	        
-	        String predicados []= { sesion+"_dificultad_"+pred,
-	                                sesion+"_calidad_prof_"+pred,
-	                                sesion+"_utilidad_"+pred,
-	                                sesion+"_esfuerzo_"+pred,
-	                                sesion+"_preparacion_"+pred,
-	                                sesion+"_expectativa_"+pred};
+	        String predicados []= { "dificultad_"+pred+"_"+sesion,
+	                                "calidad_prof_"+pred+"_"+sesion,
+	                                "utilidad_"+pred+"_"+sesion,
+	                                "esfuerzo_"+pred+"_"+sesion,
+	                                "preparacion_"+pred+"_"+sesion,
+	                                "expectativa_"+pred+"_"+sesion};
+	        
+	        System.out.println(predicados[0]);
 	        
 	        for(int i=0; i<predicados.length; i++){
 	        	
-	        	consulta=consulta+"DROP PREDICATE " + predicados[i] +
-	        			"; CREATE FUZZY PREDICATE "+ predicados[i] + " ON 1..5 AS " + 
-	        			"("+ values.get("p1")[0] +","+
-	        			values.get("p2")[0] +","+
-	        			values.get("p3")[0] +","+
-	        			values.get("p4")[0] +"); ";
+	        	respuesta=EjecutarConsulta("DESC "+predicados[i]+" ;");
+	 	        System.out.println("PRED ORIGINAL "+ respuesta);
+	        	
+	        	respuesta=EjecutarConsulta("DROP PREDICATE " + predicados[i] +" ;");
+	        	
+	        	System.out.println("CREATE FUZZY PREDICATE "+ predicados[i] + " ON 1 .. 5 AS " + 
+	        			"( "+ values.get("p1")[0] +" , "+
+	        			values.get("p2")[0] +" , "+
+	        			values.get("p3")[0] +" , "+
+	        			values.get("p4")[0] +" ) ; ");
+	        	
+	        	respuesta=EjecutarConsulta("CREATE FUZZY PREDICATE "+ predicados[i] + " ON 1 .. 5 AS " + 
+	        			"( "+ values.get("p1")[0] +" , "+
+	        			values.get("p2")[0] +" , "+
+	        			values.get("p3")[0] +" , "+
+	        			values.get("p4")[0] +" ) ; ");
+	        	
+	        	respuesta=EjecutarConsulta("DESC "+predicados[i]+" ;");
+		        System.out.println("PRED MODIFICADO "+ respuesta);
 	        }
-	        
-	        //String respuesta=EjecutarConsulta(consulta);
-	        
-	        System.out.println("CONSULTA "+consulta);
-	                                                           
-	        return ok(respuestas.render("<p>Su configuración ha sido procesada</p>"));     
+
+	        return ok(respuestas.render("<h1 style='margin-top: 50px;text-align: center;'>Su configuración ha sido procesada</h1>"));     
     }
     
     public static Result config(){
-    	
-    	
     	
     	return ok(config.render());
     }
