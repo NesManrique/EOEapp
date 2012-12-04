@@ -193,18 +193,27 @@ public class Application extends Controller {
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
         
         		
-        //DIFICULTAD
-        String consulta = "SELECT cod_materia, nombre_materia " +
-            "FROM vmat_dificultad  " +
-            "WHERE promedio = " + values.get("p1")[0] +" ;";
+        String sesion="0741051";
+        String predicado= sesion+"_"+values.get("p1")[0];
+        String consulta;
         
-        String respuesta=EjecutarConsulta(consulta);
         
-
-        if(verificarPredicado("prueba")){
-            respuesta=respuesta + "ELLLLGA";
+        if(verificarPredicado(predicado)){
+            consulta="SELECT cod_materia, nombre_materia " +
+                "FROM vmat_dificultad  " +
+                "WHERE promedio = " + predicado +" ;";
+        }
+        else{
+            
+            consulta="SELECT cod_materia, nombre_materia " +
+                "FROM vmat_dificultad  " +
+                "WHERE promedio = " + values.get("p1")[0] +" ;";
+            
         }
         
+        
+        
+        String respuesta=EjecutarConsulta(consulta);
         return ok(respuestas.render(respuesta));
     }
 
