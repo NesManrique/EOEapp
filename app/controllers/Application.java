@@ -391,7 +391,7 @@ public class Application extends Controller {
         String consulta;		
 
         
-        if(verificarPredicado(predicado1)){
+        if(verificarPredicado(predicado1) && verificarPredicado(predicado2)){
             consulta="SELECT p.nombre_profesor, pa.codigo, d.nombre_materia " +
             "FROM profesor_asignatura pa, vprof_calidad p , vmat_dificultad d " +
             "WHERE pa.prof_cedula = p.ci_profesor and " + 
@@ -426,7 +426,7 @@ public class Application extends Controller {
         String consulta;		
 
         
-        if(verificarPredicado(predicado1)){
+        if(verificarPredicado(predicado1) && verificarPredicado(predicado2)){
             consulta="SELECT e.cod_materia, e.nombre_materia " + 
                 "FROM vmat_esfuerzo e, vmat_utilidad u " +
                 "WHERE e.cod_materia = u.cod_materia and " +
@@ -459,7 +459,7 @@ public class Application extends Controller {
         String consulta;		
 
         
-        if(verificarPredicado(predicado1)){
+        if(verificarPredicado(predicado1) && verificarPredicado(predicado2)){
             consulta="SELECT p.nombre_profesor, pa.codigo, u.nombre_materia " +
                 "FROM profesor_asignatura pa, vprof_calidad p , vmat_utilidad u " +
                 "WHERE pa.prof_cedula = p.ci_profesor and " + 
@@ -480,8 +480,35 @@ public class Application extends Controller {
         return ok(respuestas.render(respuesta));
     }
   
+
+    // SI SEGUIMOS EL ESQUEMA DEL RESTO DE LA APLICACION, DEBERIAN HABER 3 FUNCIONES MUY PARECIDAS A ESTA, UNA PARA ALTO, OTRA PARA MEDIO Y OTRA PARA BAJO;
+    // OTRA MANERA ES QUE LOS 3 PREDICADOS SE ACTUALICEN A LA VEZ, EN ESE CASO DEBERIAS TENER 3 ARREGLOS DE PREDICADOS Y 3 CICLOS; CUALQUIERA QUE HAGAS ESTA BIEN MIENTRAS FUNCIONE
     public static Result config(){
-        return ok(config.render());
+
+        final Map<String, String[]> values = request().body().asFormUrlEncoded();
+ 
+        String sesion="0741051";
+        
+        String predicados []= { sesion+"_dificultad_alto",
+                                sesion+"_calidad_prof_alto",
+                                sesion+"_utilidad_alto",
+                                sesion+"_esfuerzo_alto",
+                                sesion+"_preparacion_alto",
+                                sesion+"_expectativa_alto"};
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        // LUEGO.... FOR I IN EL ARREGLO DE ARRIBA                                                //
+        //     DROP PREDICATE predicados[i];                                                      //
+        //     CREATE FUZZY PREDICATE predicados[i] ON 1 .. 5 AS (values.get("ID DEL FORM 0")[0], //
+        //                                                        values.get("ID DEL FORM 1")[0], //
+        //                                                        values.get("ID DEL FORM 2")[0], //
+        //                                                        values.get("ID DEL FORM 3")[0], //
+        //                                                        )                               //
+        // FIN DEL FOR                                                                            //
+        ////////////////////////////////////////////////////////////////////////////////////////////
+                                                           
+        return ok(respuestas.render("<p>Su configuración ha sido procesada</p>"));
+                
     }
   
     public static Result updatePredicate(){
