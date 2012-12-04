@@ -507,7 +507,9 @@ public class Application extends Controller {
         // FIN DEL FOR                                                                            //
         ////////////////////////////////////////////////////////////////////////////////////////////
                                                            
-        return ok(respuestas.render("<p>Su configuración ha sido procesada</p>"));
+        
+        return ok(config.render());
+        //return ok(respuestas.render("<p>Su configuración ha sido procesada</p>"));
                 
     }
   
