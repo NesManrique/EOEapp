@@ -192,17 +192,22 @@ public class Application extends Controller {
 	  
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
         
-        		
+        // ASUMO QUE ME PASARAN EL SESSION MEDIANTE UN STRING ASI
         String sesion="0741051";
+
+        // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
         String predicado= sesion+"_"+values.get("p1")[0];
         String consulta;
         
         
+        // SI EXISTE UN PREDICADO PERSONALIZADO EN LA BD USARLO
+
         if(verificarPredicado(predicado)){
             consulta="SELECT cod_materia, nombre_materia " +
                 "FROM vmat_dificultad  " +
                 "WHERE promedio = " + predicado +" ;";
         }
+        // DE LO CONTRARIO USAR LOS DEFAULTS QUE NO TIENEN UN PREFIJO CON EL ID DE UN USUARIO
         else{
             
             consulta="SELECT cod_materia, nombre_materia " +
@@ -221,13 +226,27 @@ public class Application extends Controller {
 	  
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
  
-   
+        // ASUMO QUE ME PASARAN EL SESSION MEDIANTE UN STRING ASI
+        String sesion="0741051";
+
+        // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
+        String predicado= sesion+"_"+values.get("p2")[0];
+        String consulta;
         
         		
-        //ESFUERZO
-        String consulta = "SELECT cod_materia, nombre_materia " +
+        if(verificarPredicado(predicado)){
+            consulta="SELECT cod_materia, nombre_materia " +
+                "FROM vmat_esfuerzo  " +
+                "WHERE promedio = " + predicado +" ;";
+        }
+        // DE LO CONTRARIO USAR LOS DEFAULTS QUE NO TIENEN UN PREFIJO CON EL ID DE UN USUARIO
+        else{
+            
+            consulta = "SELECT cod_materia, nombre_materia " +
             "FROM vmat_esfuerzo  " +
             "WHERE promedio = " + values.get("p2")[0] +" ;";
+        
+        }
         
         String respuesta=EjecutarConsulta(consulta);
         
@@ -239,12 +258,28 @@ public class Application extends Controller {
 	  
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
  
-        		
-        //UTILIDAD
-        String consulta = "SELECT cod_materia, nombre_materia " +
-            "FROM vmat_utilidad  " +
-            "WHERE promedio = " + values.get("p3")[0] +" ;";
         
+        // ASUMO QUE ME PASARAN EL SESSION MEDIANTE UN STRING ASI
+        String sesion="0741051";
+
+        // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
+        String predicado= sesion+"_"+values.get("p3")[0];
+        String consulta;
+        
+        		
+        if(verificarPredicado(predicado)){
+            consulta="SELECT cod_materia, nombre_materia " +
+                "FROM vmat_utilidad  " +
+                "WHERE promedio = " + predicado +" ;";
+        }
+        // DE LO CONTRARIO USAR LOS DEFAULTS QUE NO TIENEN UN PREFIJO CON EL ID DE UN USUARIO
+        else{
+        
+            consulta = "SELECT cod_materia, nombre_materia " +
+                "FROM vmat_utilidad  " +
+                "WHERE promedio = " + values.get("p3")[0] +" ;";
+        }        
+
         String respuesta=EjecutarConsulta(consulta);
         
         
@@ -254,13 +289,28 @@ public class Application extends Controller {
     public static Result preguntaCuatroS(){
 	  
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
- 
+        
         		
-        //PROFESOR
-        String consulta = "SELECT nombre_profesor " +
+        String sesion="0741051";
+
+        // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
+        String predicado= sesion+"_"+values.get("p4")[0];
+        String consulta;
+        
+        		
+        if(verificarPredicado(predicado)){
+            consulta="SELECT cod_materia, nombre_materia " +
+                "FROM vprof_calidad  " +
+                "WHERE promedio = " + predicado +" ;";
+        }
+        // DE LO CONTRARIO USAR LOS DEFAULTS QUE NO TIENEN UN PREFIJO CON EL ID DE UN USUARIO
+        else{
+            
+            consulta = "SELECT nombre_profesor " +
             "FROM vprof_calidad  " +
             "WHERE promedio = " + values.get("p4")[0] +" ;";
         
+        }
         String respuesta=EjecutarConsulta(consulta);
         
         
@@ -271,15 +321,29 @@ public class Application extends Controller {
 	  
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
         
+        String sesion="0741051";
+
+        // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
+        String predicado= sesion+"_"+values.get("p5")[0];
+        String consulta;
         
-        //PREPARACION PREVIA
-        String consulta = "SELECT cod_materia, nombre_materia " +
-            "FROM vmat_expectativa  " +
-            "WHERE promedio = " + values.get("p5")[0] +" ;";
+        		
+        if(verificarPredicado(predicado)){
+            consulta="SELECT cod_materia, nombre_materia " +
+                "FROM vmat_expectativa  " +
+                "WHERE promedio = " + predicado +" ;";
+        }
+        // DE LO CONTRARIO USAR LOS DEFAULTS QUE NO TIENEN UN PREFIJO CON EL ID DE UN USUARIO
+        else{
+        
+            consulta = "SELECT cod_materia, nombre_materia " +
+                "FROM vmat_expectativa  " +
+                "WHERE promedio = " + values.get("p5")[0] +" ;";
+            
+        }
         
         String respuesta=EjecutarConsulta(consulta);
-        
-        
+                
         return ok(respuestas.render(respuesta));
     }
     
@@ -288,14 +352,28 @@ public class Application extends Controller {
      
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
         
+        String sesion="0741051";
+
+        // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
+        String predicado= sesion+"_"+values.get("p6")[0];
+        String consulta;
         
-        //PREPARACION PREVIA
-        String consulta = "SELECT cod_materia, nombre_materia " +
-            "FROM vmat_preparacion  " +
-            "WHERE promedio = " + values.get("p6")[0] +" ;";
+        		
+        if(verificarPredicado(predicado)){
+            consulta="SELECT cod_materia, nombre_materia " +
+                "FROM vmat_preparacion  " +
+                "WHERE promedio = " + predicado +" ;";
+        }
+        // DE LO CONTRARIO USAR LOS DEFAULTS QUE NO TIENEN UN PREFIJO CON EL ID DE UN USUARIO
+        else{
+        
+            consulta = "SELECT cod_materia, nombre_materia " +
+                "FROM vmat_preparacion  " +
+                "WHERE promedio = " + values.get("p6")[0] +" ;";
+        
+        }
         
         String respuesta=EjecutarConsulta(consulta);
-        
         
         return ok(respuestas.render(respuesta));
  
@@ -305,13 +383,30 @@ public class Application extends Controller {
 	  
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
  
-        		
-        //PROFESOR VS DIFICULTAD
-        String consulta = "SELECT p.nombre_profesor, pa.codigo, d.nombre_materia " +
+        String sesion="0741051";
+
+        // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
+        String predicado1= sesion+"_"+values.get("p1parte1")[0];
+        String predicado2= sesion+"_"+values.get("p1parte2")[0];
+        String consulta;		
+
+        
+        if(verificarPredicado(predicado1)){
+            consulta="SELECT p.nombre_profesor, pa.codigo, d.nombre_materia " +
             "FROM profesor_asignatura pa, vprof_calidad p , vmat_dificultad d " +
             "WHERE pa.prof_cedula = p.ci_profesor and " + 
             "pa.codigo = d.cod_materia and " + 
-            "p.promedio = " + values.get("p1parte2")[0] + " and d.promedio = " + values.get("p1parte1")[0] +" ;";
+            "p.promedio = " + predicado2 + " and d.promedio = " + predicado1 +" ;";
+        }
+        // DE LO CONTRARIO USAR LOS DEFAULTS QUE NO TIENEN UN PREFIJO CON EL ID DE UN USUARIO
+        else{
+        
+            consulta = "SELECT p.nombre_profesor, pa.codigo, d.nombre_materia " +
+                "FROM profesor_asignatura pa, vprof_calidad p , vmat_dificultad d " +
+                "WHERE pa.prof_cedula = p.ci_profesor and " + 
+                "pa.codigo = d.cod_materia and " + 
+                "p.promedio = " + values.get("p1parte2")[0] + " and d.promedio = " + values.get("p1parte1")[0] +" ;";
+        }
         
         String respuesta=EjecutarConsulta(consulta);
         
@@ -323,12 +418,30 @@ public class Application extends Controller {
 	  
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
  
-        //ESFUERZO VS UTILIDAD
-        String consulta = "SELECT e.cod_materia, e.nombre_materia " + 
-            "FROM vmat_esfuerzo e, vmat_utilidad u " +
-            "WHERE e.cod_materia = u.cod_materia and " +
-            "e.promedio = " + values.get("p2parte2")[0] + " and u.promedio = " + values.get("p2parte1")[0] +" ;";
+        String sesion="0741051";
+
+        // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
+        String predicado1= sesion+"_"+values.get("p2parte1")[0];
+        String predicado2= sesion+"_"+values.get("p2parte2")[0];
+        String consulta;		
+
         
+        if(verificarPredicado(predicado1)){
+            consulta="SELECT e.cod_materia, e.nombre_materia " + 
+                "FROM vmat_esfuerzo e, vmat_utilidad u " +
+                "WHERE e.cod_materia = u.cod_materia and " +
+                "e.promedio = " + predicado2 + " and u.promedio = " + predicado1 +" ;";
+        }
+        // DE LO CONTRARIO USAR LOS DEFAULTS QUE NO TIENEN UN PREFIJO CON EL ID DE UN USUARIO
+        else{
+        
+            consulta = "SELECT e.cod_materia, e.nombre_materia " + 
+                "FROM vmat_esfuerzo e, vmat_utilidad u " +
+                "WHERE e.cod_materia = u.cod_materia and " +
+                "e.promedio = " + values.get("p2parte2")[0] + " and u.promedio = " + values.get("p2parte1")[0] +" ;";
+        
+            
+        }
         String respuesta=EjecutarConsulta(consulta);
         
         return ok(respuestas.render(respuesta));
@@ -338,14 +451,30 @@ public class Application extends Controller {
 	  
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
  
+        String sesion="0741051";
+
+        // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
+        String predicado1= sesion+"_"+values.get("p3parte1")[0];
+        String predicado2= sesion+"_"+values.get("p3parte2")[0];
+        String consulta;		
+
         
+        if(verificarPredicado(predicado1)){
+            consulta="SELECT p.nombre_profesor, pa.codigo, u.nombre_materia " +
+                "FROM profesor_asignatura pa, vprof_calidad p , vmat_utilidad u " +
+                "WHERE pa.prof_cedula = p.ci_profesor and " + 
+                "pa.codigo = u.cod_materia and " + 
+                "p.promedio = " + predicado2 + " and u.promedio = " + predicado1 + " ;";
+        }
         //PROFESOR VS UTILIDAD
-        String consulta = "SELECT p.nombre_profesor, pa.codigo, u.nombre_materia " +
-            "FROM profesor_asignatura pa, vprof_calidad p , vmat_utilidad u " +
-            "WHERE pa.prof_cedula = p.ci_profesor and " + 
-            "pa.codigo = u.cod_materia and " + 
-            "p.promedio = " + values.get("p3parte2")[0] + " and u.promedio = " + values.get("p3parte1")[0] + " ;";
+        else{
+            consulta = "SELECT p.nombre_profesor, pa.codigo, u.nombre_materia " +
+                "FROM profesor_asignatura pa, vprof_calidad p , vmat_utilidad u " +
+                "WHERE pa.prof_cedula = p.ci_profesor and " + 
+                "pa.codigo = u.cod_materia and " + 
+                "p.promedio = " + values.get("p3parte2")[0] + " and u.promedio = " + values.get("p3parte1")[0] + " ;";
         
+        }
         String respuesta=EjecutarConsulta(consulta);
         
         return ok(respuestas.render(respuesta));
