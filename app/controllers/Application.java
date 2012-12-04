@@ -481,6 +481,7 @@ public class Application extends Controller {
         return ok(respuestas.render(respuesta));
     }
   
+
     //Funcion que actualiza los predicados
     public static Result confighandle(){
     	
@@ -512,8 +513,7 @@ public class Application extends Controller {
 	        
 	        System.out.println("CONSULTA "+consulta);
 	                                                           
-	        return ok(respuestas.render("<p>Su configuración ha sido procesada</p>"));
-                
+	        return ok(respuestas.render("<p>Su configuración ha sido procesada</p>"));     
     }
     
     public static Result config(){
