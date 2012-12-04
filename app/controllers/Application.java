@@ -2,6 +2,7 @@ package controllers;
 
 import play.*;
 import play.mvc.*;
+import play.data.DynamicForm;
 import java.util.Map;
 import views.html.*;
 import java.lang.String;
@@ -480,35 +481,46 @@ public class Application extends Controller {
         return ok(respuestas.render(respuesta));
     }
   
-
-    // SI SEGUIMOS EL ESQUEMA DEL RESTO DE LA APLICACION, DEBERIAN HABER 3 FUNCIONES MUY PARECIDAS A ESTA, UNA PARA ALTO, OTRA PARA MEDIO Y OTRA PARA BAJO;
-    // OTRA MANERA ES QUE LOS 3 PREDICADOS SE ACTUALICEN A LA VEZ, EN ESE CASO DEBERIAS TENER 3 ARREGLOS DE PREDICADOS Y 3 CICLOS; CUALQUIERA QUE HAGAS ESTA BIEN MIENTRAS FUNCIONE
-    public static Result config(){
-
-        final Map<String, String[]> values = request().body().asFormUrlEncoded();
- 
-        String sesion="0741051";
-        
-        String predicados []= { sesion+"_dificultad_alto",
-                                sesion+"_calidad_prof_alto",
-                                sesion+"_utilidad_alto",
-                                sesion+"_esfuerzo_alto",
-                                sesion+"_preparacion_alto",
-                                sesion+"_expectativa_alto"};
-        
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        // LUEGO.... FOR I IN EL ARREGLO DE ARRIBA                                                //
-        //     DROP PREDICATE predicados[i];                                                      //
-        //     CREATE FUZZY PREDICATE predicados[i] ON 1 .. 5 AS (values.get("ID DEL FORM 0")[0], //
-        //                                                        values.get("ID DEL FORM 1")[0], //
-        //                                                        values.get("ID DEL FORM 2")[0], //
-        //                                                        values.get("ID DEL FORM 3")[0], //
-        //                                                        )                               //
-        // FIN DEL FOR                                                                            //
-        ////////////////////////////////////////////////////////////////////////////////////////////
-                                                           
-        return ok(respuestas.render("<p>Su configuración ha sido procesada</p>"));
+    //Funcion que actualiza los predicados
+    public static Result confighandle(){
+    	
+	        final Map<String, String[]> values = request().body().asFormUrlEncoded();
+	        
+	        String pred = values.get("pred")[0];
+	        
+	        String sesion="0741051";
+	        String consulta="";
+	        
+	        String predicados []= { sesion+"_dificultad_"+pred,
+	                                sesion+"_calidad_prof_"+pred,
+	                                sesion+"_utilidad_"+pred,
+	                                sesion+"_esfuerzo_"+pred,
+	                                sesion+"_preparacion_"+pred,
+	                                sesion+"_expectativa_"+pred};
+	        
+	        for(int i=0; i<predicados.length; i++){
+	        	
+	        	consulta=consulta+"DROP PREDICATE " + predicados[i] +
+	        			"; CREATE FUZZY PREDICATE "+ predicados[i] + " ON 1..5 AS " + 
+	        			"("+ values.get("p1")[0] +","+
+	        			values.get("p2")[0] +","+
+	        			values.get("p3")[0] +","+
+	        			values.get("p4")[0] +"); ";
+	        }
+	        
+	        //String respuesta=EjecutarConsulta(consulta);
+	        
+	        System.out.println("CONSULTA "+consulta);
+	                                                           
+	        return ok(respuestas.render("<p>Su configuración ha sido procesada</p>"));
                 
+    }
+    
+    public static Result config(){
+    	
+    	
+    	
+    	return ok(config.render());
     }
   
     public static Result updatePredicate(){

@@ -7,42 +7,45 @@
  <script src="@routes.Assets.at("javascripts/multibar.js")" type="text/javascript"></script>
 }
 
+@import helper._
+
 @main("Configuracion")(styles)(scripts){
 
 	<h1> Configuración </h1>
-	
-	<form id="Pregunta1" action="">
 		
 		<h2>Configura tus preferencias para las consultas</h2>
 	
 		<div id="accordion">
 			<h3> Alto </h3>
-			<div>        
+			<div>
+				@form(routes.Application.confighandle()) {
 		         <table id="vals">
 		         <tr>
 		         	<p> A continuación pondera del 1 al 5 donde consideras que... </p>
 			         <td>
 			         	<label>Empieza a ser alto:</label>
-			         	<input type="number" class="slide_val0 noEnterSubmit" data-index="0" size="1" step="0.01" max="5" min="1" />
+			         	<input type="number" name="p1" class="slide_val0 noEnterSubmit" data-index="0" size="1" step="0.01" max="5" min="1" />
 			         </td>
 			         <td>
 			         	<label>Es alto:</label>
-			         	<input type="number" class="slide_val0 noEnterSubmit" data-index="1" size="1" step="0.01" max="5" min="1" />
+			         	<input type="number" name="p2" class="slide_val0 noEnterSubmit" data-index="1" size="1" step="0.01" max="5" min="1" />
 			         </td>
 			         <td>
 			         	<label>Empieza a dejar de ser alto:</label>
-			         	<input type="number" class="slide_val0 noEnterSubmit" data-index="2" size="1" step="0.01" max="5" min="1" />
+			         	<input type="number" name="p3" class="slide_val0 noEnterSubmit" data-index="2" size="1" step="0.01" max="5" min="1" />
 			         </td>
 			         <td>
 			         	<label>No es alto:</label>
-			         	<input type="number" class="slide_val0 noEnterSubmit" data-index="3" size="1" step="0.01" max="5" min="1" />
+			         	<input type="number" name="p4" class="slide_val0 noEnterSubmit" data-index="3" size="1" step="0.01" max="5" min="1" />
 			         </td>
 		         </tr>
 		         </table>
 		        
 		        <div id="weightage_slider_0"></div>
 		        <div id="ruler"> </div>
+		        <input type="hidden" name="pred" value="alto"></input>
 		        <input type="submit" value="Actualizar" class="b_submit"></input>
+		        }
 			</div>
 			
 			</br>
@@ -50,68 +53,69 @@
 		    
 		    <h3> Medio </h3>
 			<div>
-			
-			<table id="vals">
-	         <tr>
-	         	<p> A continuación pondera del 1 al 5 donde consideras que... </p>
-		         <td>
-		         	<label>Empieza a ser medio:</label>
-		         	<input type="number" class="slide_val1 noEnterSubmit" data-index="0" size="1" step="0.01" max="5" min="1" />
-		         </td>
-		         <td>
-		         	<label>Es medio:</label>
-		         	<input type="number" class="slide_val1 noEnterSubmit" data-index="1" size="1" step="0.01" max="5" min="1" />
-		         </td>
-		         <td>
-		         	<label>Empieza a dejar de ser medio:</label>
-		         	<input type="number" class="slide_val1 noEnterSubmit" data-index="2" size="1" step="0.01" max="5" min="1" />
-		         </td>
-		         <td>
-		         	<label>Deja de ser medio:</label>
-		         	<input type="number" class="slide_val1 noEnterSubmit" data-index="3" size="1" step="0.01" max="5" min="1" />
-		         </td>
-	         </tr>
-	         </table>
-	        
-	        <div id="weightage_slider_1"></div>
-	        <div id="ruler"> </div>
-	        <input type="submit" value="Actualizar" class="b_submit"></input>
-			
+				@form(routes.Application.confighandle()) {
+				<table id="vals">
+		         <tr>
+		         	<p> A continuación pondera del 1 al 5 donde consideras que... </p>
+			         <td>
+			         	<label>Empieza a ser medio:</label>
+			         	<input type="number" class="slide_val1 noEnterSubmit" data-index="0" size="1" step="0.01" max="5" min="1" />
+			         </td>
+			         <td>
+			         	<label>Es medio:</label>
+			         	<input type="number" class="slide_val1 noEnterSubmit" data-index="1" size="1" step="0.01" max="5" min="1" />
+			         </td>
+			         <td>
+			         	<label>Empieza a dejar de ser medio:</label>
+			         	<input type="number" class="slide_val1 noEnterSubmit" data-index="2" size="1" step="0.01" max="5" min="1" />
+			         </td>
+			         <td>
+			         	<label>Deja de ser medio:</label>
+			         	<input type="number" class="slide_val1 noEnterSubmit" data-index="3" size="1" step="0.01" max="5" min="1" />
+			         </td>
+		         </tr>
+		         </table>
+		        
+		        <div id="weightage_slider_1"></div>
+		        <div id="ruler"> </div>
+		        <input type="submit" value="Actualizar" class="b_submit"></input>
+		        <input type="hidden" id="pred" value="medio"></input>
+				}
 			</div>
 		    </br>
 		    <hr>
 		    
 		    <h3> Bajo </h3>
 		    <div>
-		    
-		    <table id="vals">
-	         <tr>
-	         	<p> A continuación pondera del 1 al 5 donde consideras que... </p>
-		         <td>
-		         	<label>Empieza a ser bajo:</label>
-		         	<input type="number" class="slide_val2 noEnterSubmit" data-index="0" size="1" step="0.01" max="5" min="1" />
-		         </td>
-		         <td>
-		         	<label>Es bajo:</label>
-		         	<input type="number" class="slide_val2 noEnterSubmit" data-index="1" size="1" step="0.01" max="5" min="1" />
-		         </td>
-		         <td>
-		         	<label>Empieza a dejar de ser bajo:</label>
-		         	<input type="number" class="slide_val2 noEnterSubmit" data-index="2" size="1" step="0.01" max="5" min="1" />
-		         </td>
-		         <td>
-		         	<label>Deja de ser bajo:</label>
-		         	<input type="number" class="slide_val2 noEnterSubmit" data-index="3" size="1" step="0.01" max="5" min="1" />
-		         </td>
-	         </tr>
-	         </table>
-	        
-	        <div id="weightage_slider_2"></div>
-	        <div id="ruler"> </div>
-		 	<input type="submit" value="Actualizar" class="b_submit"></input>
-		 	
+			    @form(routes.Application.confighandle()) {
+			    <table id="vals">
+		         <tr>
+		         	<p> A continuación pondera del 1 al 5 donde consideras que... </p>
+			         <td>
+			         	<label>Empieza a ser bajo:</label>
+			         	<input type="number" class="slide_val2 noEnterSubmit" data-index="0" size="1" step="0.01" max="5" min="1" />
+			         </td>
+			         <td>
+			         	<label>Es bajo:</label>
+			         	<input type="number" class="slide_val2 noEnterSubmit" data-index="1" size="1" step="0.01" max="5" min="1" />
+			         </td>
+			         <td>
+			         	<label>Empieza a dejar de ser bajo:</label>
+			         	<input type="number" class="slide_val2 noEnterSubmit" data-index="2" size="1" step="0.01" max="5" min="1" />
+			         </td>
+			         <td>
+			         	<label>Deja de ser bajo:</label>
+			         	<input type="number" class="slide_val2 noEnterSubmit" data-index="3" size="1" step="0.01" max="5" min="1" />
+			         </td>
+		         </tr>
+		         </table>
+		        
+		        <div id="weightage_slider_2"></div>
+		        <div id="ruler"> </div>
+			 	<input type="submit" value="Actualizar" class="b_submit"></input>
+			 	<input type="hidden" id="pred" value="bajo"></input>
+			 	}
 		 	</div>
 	 	
 	 	</div>
-	 </form>
 }

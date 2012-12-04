@@ -16,7 +16,7 @@ POST	  /resconsulta				   controllers.Application.preguntaUnoC()
 POST	  /resconsulta2			   controllers.Application.preguntaDosC()
 POST	  /resconsulta3			   controllers.Application.preguntaTresC()
 GET	  /config					   controllers.Application.config()
-POST	  /config					   controllers.Application.updatePredicate()
+POST	  /config					   controllers.Application.confighandle()
 
 
 # Map static resources from the /public folder to the /assets URL path
