@@ -1,3 +1,5 @@
+@(id : String)
+
 @styles = {
 	<link href="@routes.Assets.at("stylesheets/jquery-ui-1.9.2.custom.css")" rel="stylesheet" type="text/css"/>
 }
@@ -16,7 +18,8 @@
 }
 
 @main("Inicio")(styles)(scripts){
-
+	 
+	 @(id)
 	<h1> Módulo de Consultas Difusas para la Encuesta de Opinión Estudiantil </h1>
 		<p> 
         	Bienvenido al módulo de consultas difusas para la Encuesta de Opinión Estudiantil.<br> 
