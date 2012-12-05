@@ -171,8 +171,8 @@ $(document).ready(function() {
 		    				}
 		    				break;
 		    			case 1:
-		    				prev = $("#weightage_slider_"+slidenum).slider("values", 0);
-		    				next = $("#weightage_slider_"+slidenum).slider("values", 2);
+		    				prev = $("#weightage_slider_"+slidenum).slider("values", 2);
+		    				next = $("#weightage_slider_"+slidenum).slider("values", 0);
 		    				if($this.val()>=next){
 		    					return false;
 		    				}else if($this.val()<=prev){
@@ -182,8 +182,8 @@ $(document).ready(function() {
 		    				}
 		    				break;
 		    			case 2:
-		    				prev = $("#weightage_slider_"+slidenum).slider("values", 1);
-			    			next = $("#weightage_slider_"+slidenum).slider("values", 3);
+		    				prev = $("#weightage_slider_"+slidenum).slider("values", 3);
+			    			next = $("#weightage_slider_"+slidenum).slider("values", 1);
 		    				if($this.val()>=next){
 		    					return false;
 		    				}else if($this.val()<=prev){
