@@ -537,7 +537,7 @@ public class Application extends Controller {
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
         
         // ASUMO QUE ME PASARAN EL SESSION MEDIANTE UN STRING ASI
-        String sesion="0741051";
+        String sesion=session("id");
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
         String predicado= values.get("p1")[0]+"_"+sesion;
@@ -571,7 +571,7 @@ public class Application extends Controller {
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
  
         // ASUMO QUE ME PASARAN EL SESSION MEDIANTE UN STRING ASI
-        String sesion="0741051";
+        String sesion=session("id");
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
         String predicado= values.get("p2")[0]+"_"+sesion;
@@ -604,7 +604,7 @@ public class Application extends Controller {
  
         
         // ASUMO QUE ME PASARAN EL SESSION MEDIANTE UN STRING ASI
-        String sesion="0741051";
+        String sesion=session("id");
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
         String predicado= values.get("p3")[0]+"_"+sesion;
@@ -635,7 +635,7 @@ public class Application extends Controller {
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
         
         		
-        String sesion="0741051";
+        String sesion=session("id");
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
         String predicado= values.get("p4")[0]+"_"+sesion;
@@ -665,7 +665,7 @@ public class Application extends Controller {
 	  
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
         
-        String sesion="0741051";
+        String sesion=session("id");
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
         String predicado= values.get("p5")[0]+"_"+sesion;
@@ -696,7 +696,7 @@ public class Application extends Controller {
      
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
         
-        String sesion="0741051";
+        String sesion=session("id");
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
         String predicado= values.get("p6")[0]+"_"+sesion;
@@ -727,7 +727,7 @@ public class Application extends Controller {
 	  
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
  
-        String sesion="0741051";
+        String sesion=session("id");
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
 	String predicado1= values.get("p1parte1")[0]+"_"+sesion;
@@ -762,7 +762,7 @@ public class Application extends Controller {
 	  
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
  
-        String sesion="0741051";
+        String sesion=session("id");
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
         String predicado1= values.get("p2parte1")[0]+"_"+sesion;
@@ -795,7 +795,7 @@ public class Application extends Controller {
 	  
         final Map<String, String[]> values = request().body().asFormUrlEncoded();
  
-        String sesion="0741051";
+        String sesion=session("id");
 
         // LOS PREDICADOS PERSONALIZADOS SON DE LA FORMA id_predicado, EJ: 0741051_dificultad_alto
         String predicado1= values.get("p3parte1")[0]+"_"+sesion;
