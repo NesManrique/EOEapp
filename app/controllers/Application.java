@@ -832,16 +832,16 @@ public class Application extends Controller {
 	        
 	        for(int i=0; i<predicados.length; i++){
 	        	
-	        	respuesta=EjecutarConsulta("DESC "+predicados[i]+" ;");
-	 	        System.out.println("PRED ORIGINAL "+ respuesta);
+	        	//respuesta=EjecutarConsulta("DESC "+predicados[i]+" ;");
+	 	        //System.out.println("PRED ORIGINAL "+ respuesta);
 	        	
 	        	respuesta=EjecutarConsulta("DROP PREDICATE " + predicados[i] +" ;");
 	        	
-	        	System.out.println("CREATE FUZZY PREDICATE "+ predicados[i] + " ON 1 .. 5 AS " + 
+	        	/*System.out.println("CREATE FUZZY PREDICATE "+ predicados[i] + " ON 1 .. 5 AS " + 
 	        			"( "+ values.get("p1")[0] +" , "+
 	        			values.get("p2")[0] +" , "+
 	        			values.get("p3")[0] +" , "+
-	        			values.get("p4")[0] +" ) ; ");
+	        			values.get("p4")[0] +" ) ; ");*/
 	        	
 	        	respuesta=EjecutarConsulta("CREATE FUZZY PREDICATE "+ predicados[i] + " ON 1 .. 5 AS " + 
 	        			"( "+ values.get("p1")[0] +" , "+
@@ -849,8 +849,8 @@ public class Application extends Controller {
 	        			values.get("p3")[0] +" , "+
 	        			values.get("p4")[0] +" ) ; ");
 	        	
-	        	respuesta=EjecutarConsulta("DESC "+predicados[i]+" ;");
-		        System.out.println("PRED MODIFICADO "+ respuesta);
+	        	/*respuesta=EjecutarConsulta("DESC "+predicados[i]+" ;");
+		        System.out.println("PRED MODIFICADO "+ respuesta);*/
 	        }
 
 	        return ok(respuestas.render("<h1 style='margin-top: 50px;text-align: center;'>Su configuración ha sido procesada</h1>"));     
